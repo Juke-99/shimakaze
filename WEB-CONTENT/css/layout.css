@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+span {
+  font-size: 32px;
+  color: #773294;
+}
