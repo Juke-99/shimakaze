@@ -52,8 +52,8 @@ public class RequestHandlar implements Runnable {
   	put("xls", "application/vnd.ms-excel");
   	put("ppt", "application/vnd.ms-powerpoint");
   	put("pps", "application/vnd.ms-powerpoint");
-  	put("js",  "application/x-javascript");
-  	put("jse", "application/x-javascript");
+  	put("js",  "application/javascript");
+  	put("jse", "application/javascript");
   	put("reg", "application/octet-stream");
   	put("eps", "application/postscript");
   	put("ps",  "application/postscript");
@@ -195,6 +195,11 @@ public class RequestHandlar implements Runnable {
           }
         }
 
+        index = pathInfo.lastIndexOf('.');
+        String ext = index > 0 ? pathInfo.substring(index + 1) : "html";
+        String mimeType = (String) types.get(ext);
+        setContentType(mimeType);
+
         OutputStream os = null;
 
         if (false || stamp == null || since == null || !stamp.equals(since.substring(0, stamp.length()))) {
@@ -209,11 +214,6 @@ public class RequestHandlar implements Runnable {
           setStatus( 304 );
           os = getOutputStream();
         }
-
-        index = pathInfo.lastIndexOf('.');
-        String ext = index > 0 ? pathInfo.substring(index + 1) : "html";
-        String mimeType = (String) types.get(ext);
-        setContentType(mimeType);
 
         os.flush();
       } catch (Exception e) {
